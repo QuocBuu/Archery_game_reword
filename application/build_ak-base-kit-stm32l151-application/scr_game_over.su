@@ -1,0 +1,4 @@
+sources/app/screens/scr_game_over.cpp:44:6:void score_read()	8	static
+sources/app/screens/scr_game_over.cpp:51:6:void rank_ranking()	12	static
+sources/app/screens/scr_game_over.cpp:66:6:void view_scr_game_over()	32	static
+sources/app/screens/scr_game_over.cpp:83:6:void scr_game_over_handle(ak_msg_t*)	8	static
