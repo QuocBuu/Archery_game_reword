@@ -1,2 +1,4 @@
+sources/app/screens/scr_charts_game.cpp:24:6:void read_score_charts()	8	static
+sources/app/screens/scr_charts_game.cpp:30:6:void reset_score_charts()	16	static
 sources/app/screens/scr_charts_game.cpp:39:6:void view_scr_charts_game()	40	static
 sources/app/screens/scr_charts_game.cpp:62:6:void scr_charts_game_handle(ak_msg_t*)	8	static

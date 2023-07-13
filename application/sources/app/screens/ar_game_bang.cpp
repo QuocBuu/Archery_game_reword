@@ -1,12 +1,11 @@
 #include "ar_game_bang.h"
+
 #include "ar_game_meteoroid.h"
 #include "ar_game_arrow.h"
 
-ar_game_bang bang[NUM_BANG];
-
 #define AR_GAME_BANG_SETUP() \
 do { \
-    for (int i = 0; i < NUM_BANG; i++) { \
+    for (uint8_t i = 0; i < NUM_BANG; i++) { \
         bang[i].x = 0; \
         bang[i].y = 0; \
         bang[i].display = BLACK; \
@@ -14,8 +13,18 @@ do { \
     } \
 } while (0);
 
+#define AR_GAME_BANG_RESET() \
+do { \
+    for (uint8_t i = 0; i < NUM_BANG; i++) { \
+        bang[i].display = BLACK; \
+        bang[i].animation = 1; \
+    } \
+} while (0);
+
+ar_game_bang bang[NUM_BANG];
+
 void ar_game_bang_update() {
-    for (int i = 0; i < NUM_BANG; i++) {
+    for (uint8_t i = 0; i < NUM_BANG; i++) {
         if (bang[i].display == WHITE) {
             bang[i].animation++;
         }
@@ -26,14 +35,6 @@ void ar_game_bang_update() {
         }
     }
 }
-
-#define AR_GAME_BANG_RESET() \
-do { \
-    for (int i = 0; i < NUM_BANG; i++) { \
-        bang[i].display = BLACK; \
-        bang[i].animation = 1; \
-    } \
-} while (0);
 
 void ar_game_bang_handle(ak_msg_t* msg) {
     switch (msg->sig) {

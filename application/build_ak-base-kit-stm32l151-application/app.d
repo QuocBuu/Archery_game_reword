@@ -226,7 +226,7 @@ build_ak-base-kit-stm32l151-application/app.o: sources/app/app.cpp \
  sources/common/view_render.h sources/app/screens/scr_menu_game.h \
  sources/app/screens/scr_charts_game.h \
  sources/app/screens/scr_game_over.h \
- sources/app/screens/scr_archer_game.h sources/driver/eeprom/eeprom.h \
+ sources/app/screens/scr_archery_game.h sources/driver/eeprom/eeprom.h \
  sources/app/app_eeprom.h sources/app/screens/scr_game_setting.h \
  sources/app/screens/scr_idle.h sources/app/screens/scr_startup.h \
  sources/app/task_zigbee.h sources/sys/sys_irq.h \

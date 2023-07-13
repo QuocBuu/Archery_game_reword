@@ -23,9 +23,9 @@
 #define AXIT_Y_ARCHERY          (20)
 
 typedef struct {
-	int x, y;
+    uint32_t x, y;
     bool display;
-    int animation;
+    uint8_t animation;
 } ar_game_archery;
 
 extern ar_game_archery archery;

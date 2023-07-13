@@ -27,9 +27,9 @@
 #define AXIT_Y_METEOROID_4          (42)
 
 typedef struct {
-	int x, y;
+	uint32_t x, y;
     bool display;
-    int animation;
+    uint8_t animation;
 } ar_game_meteoroid;
 
 extern ar_game_meteoroid meteoroid[NUM_METEOROIDS];

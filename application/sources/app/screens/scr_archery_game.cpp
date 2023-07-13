@@ -1,4 +1,4 @@
-#include "scr_archer_game.h"
+#include "scr_archery_game.h"
 
 #include "ar_game_archery.h"
 #include "ar_game_arrow.h"
@@ -12,17 +12,17 @@ uint8_t num_arrow;
 uint8_t arrow_speed;
 uint8_t meteoroid_speed;
 
-static void view_scr_archer_game();
+static void view_scr_archery_game();
 
-view_dynamic_t dyn_view_item_archer_game = {
+view_dynamic_t dyn_view_item_archery_game = {
 	{
 		.item_type = ITEM_TYPE_DYNAMIC,
 	},
-	view_scr_archer_game
+	view_scr_archery_game
 };
 
-view_screen_t scr_archer_game = {
-	&dyn_view_item_archer_game,
+view_screen_t scr_archery_game = {
+	&dyn_view_item_archery_game,
 	ITEM_NULL,
 	ITEM_NULL,
 
@@ -38,7 +38,7 @@ void ar_game_screen_display() {
 	view_render.setTextColor(WHITE);		// Color
 	view_render.setCursor(2,55);			// Location
 	view_render.print("Arrow:");			
-	view_render.print((int)num_arrow);
+	view_render.print(num_arrow);
 	view_render.setCursor(60,55);
 	view_render.print(" Score:");
 	view_render.print(score);
@@ -67,7 +67,7 @@ void ar_game_archery_display() {
 }
 
 void ar_game_arrow_display() {
-	for (int i = 0; i < MAX_NUM_ARROW; i++) {
+	for (uint8_t i = 0; i < MAX_NUM_ARROW; i++) {
 		if (arrow[i].display == WHITE) {
 			view_render.drawBitmap(	arrow[i].x, 
 									arrow[i].y,
@@ -80,7 +80,7 @@ void ar_game_arrow_display() {
 }
 
 void ar_game_meteoroid_display() {
-	for (int i = 0; i < NUM_METEOROIDS; i++) {
+	for (uint8_t i = 0; i < NUM_METEOROIDS; i++) {
 		if (meteoroid[i].display == WHITE) {
 			if (meteoroid[i].animation == 1) {
 				view_render.drawBitmap(	meteoroid[i].x, 
@@ -116,7 +116,7 @@ void ar_game_border_display() {
 									AXIT_Y_BORDER_ON,
 									AXIT_Y_BORDER_UNDER, 
 									WHITE);
-		for (int i = 0; i < NUM_METEOROIDS; i++) {
+		for (uint8_t i = 0; i < NUM_METEOROIDS; i++) {
 			view_render.fillCircle(	border.x, 
 									meteoroid[i].y + 5, 
 									1, 
@@ -126,7 +126,7 @@ void ar_game_border_display() {
 }
 
 void ar_game_bang_display() {
-	for (int i = 0; i < NUM_BANG; i++) {
+	for (uint8_t i = 0; i < NUM_BANG; i++) {
 		if (bang[i].display == WHITE) {
 			if (bang[i].animation == 1) {
 				view_render.drawBitmap(	bang[i].x, 
@@ -156,7 +156,7 @@ void ar_game_bang_display() {
 	}
 }
 
-void view_scr_archer_game() {
+void view_scr_archery_game() {
 	ar_game_screen_display();
 	ar_game_archery_display();
 	ar_game_arrow_display();
@@ -192,7 +192,7 @@ void ar_game_save_score() {
     score = 10;
 }
 
-void scr_archer_game_handle(ak_msg_t* msg) {
+void scr_archery_game_handle(ak_msg_t* msg) {
 	switch (msg->sig) {
 	case SCREEN_ENTRY: {
 		case AR_GAME_INITIAL_SETUP: {

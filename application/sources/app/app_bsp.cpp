@@ -9,7 +9,6 @@
 
 #include "task_list.h"
 #include "task_list_if.h"
-#include "scr_archer_game.h"
 
 button_t btn_mode;
 button_t btn_up;

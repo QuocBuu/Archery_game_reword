@@ -18,9 +18,9 @@
 #define SIZE_BITMAP_ARROW_Y (5)
 
 typedef struct {
-	int x, y;
+	uint32_t x, y;
     bool display;
-    int animation;
+    uint8_t animation;
 } ar_game_arrow;
 
 extern ar_game_arrow arrow[MAX_NUM_ARROW];

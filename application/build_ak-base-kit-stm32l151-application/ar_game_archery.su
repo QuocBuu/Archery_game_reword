@@ -1,4 +1,4 @@
-sources/app/screens/ar_game_archery.cpp:15:6:void ar_game_archery_update()	0	static
-sources/app/screens/ar_game_archery.cpp:19:6:void ar_game_archery_up()	0	static
-sources/app/screens/ar_game_archery.cpp:24:6:void ar_game_archery_down()	0	static
+sources/app/screens/ar_game_archery.cpp:23:6:void ar_game_archery_update()	0	static
+sources/app/screens/ar_game_archery.cpp:27:6:void ar_game_archery_up()	0	static
+sources/app/screens/ar_game_archery.cpp:32:6:void ar_game_archery_down()	0	static
 sources/app/screens/ar_game_archery.cpp:37:6:void ar_game_archery_handle(ak_msg_t*)	8	static

@@ -23,12 +23,12 @@
 #define AXIT_Y_BORDER_UNDER     (52)
 
 typedef struct {
-	int x, y;
+	uint32_t x, y;
     bool display;
-    int animation;
+    uint8_t animation;
 } ar_game_border;
 
-extern int score;
+extern uint32_t score;
 extern ar_game_border border;
 
 #endif //__AR_GAME_BORDER_H__

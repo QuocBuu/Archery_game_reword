@@ -24,9 +24,9 @@
 
 struct ar_game_bang
 {
-    int x, y;
+    uint32_t x, y;
     bool display;
-    int animation;
+    uint8_t animation;
 };
 
 extern ar_game_bang bang[NUM_BANG];

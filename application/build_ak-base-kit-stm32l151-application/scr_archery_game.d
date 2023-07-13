@@ -1,6 +1,6 @@
-build_ak-base-kit-stm32l151-application/scr_archer_game.o: \
- sources/app/screens/scr_archer_game.cpp \
- sources/app/screens/scr_archer_game.h sources/ak/inc/fsm.h \
+build_ak-base-kit-stm32l151-application/scr_archery_game.o: \
+ sources/app/screens/scr_archery_game.cpp \
+ sources/app/screens/scr_archery_game.h sources/ak/inc/fsm.h \
  /home/buu/Workspace/Tools/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3.1/include/stdint.h \
  /home/buu/Workspace/Tools/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdint.h \
  /home/buu/Workspace/Tools/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h \
@@ -153,7 +153,7 @@ build_ak-base-kit-stm32l151-application/scr_archer_game.o: \
  sources/app/screens/scr_menu_game.h \
  sources/app/screens/scr_charts_game.h \
  sources/app/screens/scr_game_over.h \
- sources/app/screens/scr_archer_game.h \
+ sources/app/screens/scr_archery_game.h \
  sources/app/screens/scr_game_setting.h sources/driver/button/button.h \
  sources/app/screens/scr_startup.h sources/driver/eeprom/eeprom.h \
  sources/app/app_eeprom.h sources/app/screens/scr_menu_game.h \

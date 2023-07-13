@@ -1,12 +1,6 @@
 #ifndef __BITMAP_ARCHERY_GAME_H__
 #define __BITMAP_ARCHERY_GAME_H__
 
-#include "ar_game_archery.h"
-#include "ar_game_arrow.h"
-#include "ar_game_bang.h"
-#include "ar_game_border.h"
-#include "ar_game_meteoroid.h"
-
 // 'bitmap_archery_I', 15x15px
 extern const unsigned char PROGMEM bitmap_archery_I [] = {
 	0x04, 0x00, 0x02, 0x00, 0x01, 0x00, 0x04, 0xc0, 0x00, 0x40, 0x08, 0x40, 0x00, 0x00, 0x1f, 0xf0, 

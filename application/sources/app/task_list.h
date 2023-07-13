@@ -93,7 +93,7 @@ extern void ar_game_arrow_handle(ak_msg_t*);
 extern void ar_game_meteoroid_handle(ak_msg_t*);
 extern void ar_game_border_handle(ak_msg_t*);
 extern void ar_game_bang_handle(ak_msg_t*);
-extern void scr_archer_game_handle(ak_msg_t*);
+extern void scr_archery_game_handle(ak_msg_t*);
 
 /* RF24 NETWORK TASK */
 extern void task_rf24_phy(ak_msg_t*);
