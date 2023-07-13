@@ -20,7 +20,7 @@
 #define SIZE_BITMAP_ARCHERY_X   (15)
 #define SIZE_BITMAP_ARCHERY_Y   (15)
 #define AXIT_X_ARCHERY          (0)
-#define AXIT_Y_ARCHERY          (20)
+#define AXIT_Y_ARCHERY          (30)
 
 typedef struct {
     uint32_t x, y;

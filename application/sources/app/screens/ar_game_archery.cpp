@@ -26,12 +26,12 @@ void ar_game_archery_update() {
 
 void ar_game_archery_up() {
     archery_y -= STEP_ARCHERY_AXIS_Y;
-    if (archery_y < 0) {archery_y = 0;}
+    if (archery_y == 0) {archery_y = 10;}
 }
 
 void ar_game_archery_down() {
     archery_y += STEP_ARCHERY_AXIS_Y;
-    if (archery_y > 40) {archery_y = 40;}
+    if (archery_y > 50) {archery_y = 50;}
 }
 
 void ar_game_archery_handle(ak_msg_t* msg) {

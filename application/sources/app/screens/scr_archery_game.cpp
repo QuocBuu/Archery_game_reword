@@ -50,7 +50,7 @@ void ar_game_screen_display() {
 void ar_game_archery_display() {
 	if (archery.display == WHITE && num_arrow != 0) {
 		view_render.drawBitmap(	archery.x, 
-								archery.y,
+								archery.y-10,
 								bitmap_archery_I,
 								SIZE_BITMAP_ARCHERY_X, 
 								SIZE_BITMAP_ARCHERY_Y,
@@ -70,7 +70,7 @@ void ar_game_arrow_display() {
 	for (uint8_t i = 0; i < MAX_NUM_ARROW; i++) {
 		if (arrow[i].display == WHITE) {
 			view_render.drawBitmap(	arrow[i].x, 
-									arrow[i].y,
+									arrow[i].y-10,
 									bitmap_arrow,	
 									SIZE_BITMAP_ARROW_X, 
 									SIZE_BITMAP_ARROW_Y,
