@@ -5,15 +5,15 @@
 
 #define AR_GAME_BORDER_SETUP() \
 do { \
-    border.x = AXIT_X_BORDER; \
-    border.display = WHITE; \
-    border.animation = 0; \
+    border.x = AXIS_X_BORDER; \
+    border.visible = WHITE; \
+    border.action_image = 0; \
 } while (0);
 
 #define AR_GAME_BORDER_RESET() \
 do { \
-    border.x = AXIT_X_BORDER; \
-    border.display = BLACK; \
+    border.x = AXIS_X_BORDER; \
+    border.visible = BLACK; \
 } while (0);
 
 ar_game_border border;

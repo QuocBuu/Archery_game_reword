@@ -8,8 +8,8 @@ do { \
     for (uint8_t i = 0; i < num_arrow; i++) { \
         arrow[i].x = 0; \
         arrow[i].y = 0; \
-        arrow[i].display = BLACK; \
-        arrow[i].animation = 1; \
+        arrow[i].visible = BLACK; \
+        arrow[i].action_image = 1; \
     } \
 } while (0);
 
@@ -18,8 +18,8 @@ do { \
     for (uint8_t i = 0; i < num_arrow; i++) { \
         arrow[i].x = 0; \
         arrow[i].y = 0; \
-        arrow[i].display = BLACK; \
-        arrow[i].animation = 1; \
+        arrow[i].visible = BLACK; \
+        arrow[i].action_image = 1; \
     } \
 } while (0);
 
@@ -27,12 +27,12 @@ ar_game_arrow arrow[MAX_NUM_ARROW];
 
 void ar_game_arrow_run() {
     for (uint8_t i = 0; i < MAX_NUM_ARROW; i++) {
-		if (arrow[i].display == WHITE) {
+		if (arrow[i].visible == WHITE) {
             // Arrow run
 			arrow[i].x += arrow_speed;
             // Arrows ends 
-            if (arrow[i].x == MAX_AXIT_X_ARROW) {
-				arrow[i].display = BLACK;
+            if (arrow[i].x == MAX_AXIS_X_ARROW) {
+				arrow[i].visible = BLACK;
 				arrow[i].x = 0;
 				num_arrow++;
 			}
@@ -42,10 +42,10 @@ void ar_game_arrow_run() {
 
 void ar_game_arrow_shoot() {
     for (uint8_t i = 0; i < MAX_NUM_ARROW; i++) {
-        if (arrow[i].display == BLACK && num_arrow != 0) {
+        if (arrow[i].visible == BLACK && num_arrow != 0) {
             num_arrow--;
-            arrow[i].display = WHITE;
-            arrow[i].y = archery.y + 5;
+            arrow[i].visible = WHITE;
+            arrow[i].y = archery.y - 5;
             BUZZER_PlayTones(tones_cc);
             break;
         }

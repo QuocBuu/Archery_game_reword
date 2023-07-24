@@ -2,23 +2,23 @@
 
 #define AR_GAME_ARCHERY_SETUP() \
 do { \
-    archery.x = AXIT_X_ARCHERY; \
-    archery.y = AXIT_Y_ARCHERY; \
-    archery.display = WHITE; \
-    archery.animation = 1; \
+    archery.x = AXIS_X_ARCHERY; \
+    archery.y = AXIS_Y_ARCHERY; \
+    archery.visible = WHITE; \
+    archery.action_image = 1; \
 } while (0);
 
 #define AR_GAME_ARCHERY_RESET() \
 do { \
-    archery.x = AXIT_X_ARCHERY; \
-    archery.y = AXIT_Y_ARCHERY; \
-    archery.display = BLACK; \
-    archery_y = AXIT_Y_ARCHERY; \
+    archery.x = AXIS_X_ARCHERY; \
+    archery.y = AXIS_Y_ARCHERY; \
+    archery.visible = BLACK; \
+    archery_y = AXIS_Y_ARCHERY; \
 } while(0);
 
 ar_game_archery archery;
 
-uint32_t archery_y = AXIT_Y_ARCHERY;
+uint32_t archery_y = AXIS_Y_ARCHERY;
 
 void ar_game_archery_update() {
     archery.y = archery_y;
@@ -26,12 +26,12 @@ void ar_game_archery_update() {
 
 void ar_game_archery_up() {
     archery_y -= STEP_ARCHERY_AXIS_Y;
-    if (archery_y < 0) {archery_y = 0;}
+    if (archery_y == 0) {archery_y = 10;}
 }
 
 void ar_game_archery_down() {
     archery_y += STEP_ARCHERY_AXIS_Y;
-    if (archery_y > 40) {archery_y = 40;}
+    if (archery_y > 50) {archery_y = 50;}
 }
 
 void ar_game_archery_handle(ak_msg_t* msg) {

@@ -20,16 +20,16 @@
 #define SIZE_BITMAP_METEOROIDS_X    (20)
 #define SIZE_BITMAP_METEOROIDS_Y    (10)
 
-#define AXIT_Y_METEOROID_0          (2)
-#define AXIT_Y_METEOROID_1          (12)
-#define AXIT_Y_METEOROID_2          (22)
-#define AXIT_Y_METEOROID_3          (32)
-#define AXIT_Y_METEOROID_4          (42)
+#define AXIS_Y_METEOROID_0          (2)
+#define AXIS_Y_METEOROID_1          (12)
+#define AXIS_Y_METEOROID_2          (22)
+#define AXIS_Y_METEOROID_3          (32)
+#define AXIS_Y_METEOROID_4          (42)
 
 typedef struct {
+    bool visible;
 	uint32_t x, y;
-    bool display;
-    uint8_t animation;
+    uint8_t action_image;
 } ar_game_meteoroid;
 
 extern ar_game_meteoroid meteoroid[NUM_METEOROIDS];
