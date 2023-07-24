@@ -2,23 +2,23 @@
 
 #define AR_GAME_ARCHERY_SETUP() \
 do { \
-    archery.x = AXIT_X_ARCHERY; \
-    archery.y = AXIT_Y_ARCHERY; \
-    archery.display = WHITE; \
-    archery.animation = 1; \
+    archery.x = AXIS_X_ARCHERY; \
+    archery.y = AXIS_Y_ARCHERY; \
+    archery.visible = WHITE; \
+    archery.action_image = 1; \
 } while (0);
 
 #define AR_GAME_ARCHERY_RESET() \
 do { \
-    archery.x = AXIT_X_ARCHERY; \
-    archery.y = AXIT_Y_ARCHERY; \
-    archery.display = BLACK; \
-    archery_y = AXIT_Y_ARCHERY; \
+    archery.x = AXIS_X_ARCHERY; \
+    archery.y = AXIS_Y_ARCHERY; \
+    archery.visible = BLACK; \
+    archery_y = AXIS_Y_ARCHERY; \
 } while(0);
 
 ar_game_archery archery;
 
-uint32_t archery_y = AXIT_Y_ARCHERY;
+uint32_t archery_y = AXIS_Y_ARCHERY;
 
 void ar_game_archery_update() {
     archery.y = archery_y;

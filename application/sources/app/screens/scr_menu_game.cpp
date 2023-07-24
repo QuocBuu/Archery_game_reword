@@ -3,16 +3,43 @@
 /*****************************************************************************/
 /* Variable and Struct Declaration - Menu game */
 /*****************************************************************************/
-// Define
-#define STEP_MENU_CHOSSE		(22)
-#define NUMBER_MENU_ITEMS		(4)
-#define SCREEN_W				(128)
-#define	SCREEN_H				(64)
+#define STEP_MENU_CHOSSE				(22)
+#define NUMBER_MENU_ITEMS				(4)
+#define SCREEN_W						(128)
+#define	SCREEN_H						(64)
 
-#define MENU_ITEM_ARRDESS_1		(STEP_MENU_CHOSSE)
-#define MENU_ITEM_ARRDESS_2		(STEP_MENU_CHOSSE*2)
-#define MENU_ITEM_ARRDESS_3		(STEP_MENU_CHOSSE*3)
-#define MENU_ITEM_ARRDESS_4		(STEP_MENU_CHOSSE*4)
+#define MENU_ITEM_ARRDESS_1				(STEP_MENU_CHOSSE)
+#define MENU_ITEM_ARRDESS_2				(STEP_MENU_CHOSSE*2)
+#define MENU_ITEM_ARRDESS_3				(STEP_MENU_CHOSSE*3)
+#define MENU_ITEM_ARRDESS_4				(STEP_MENU_CHOSSE*4)
+
+// 'archery_icon', 15x15px
+static const unsigned char PROGMEM archery_icon [] = {
+    0x04, 0x00, 0x02, 0x00, 0x01, 0x00, 0x04, 0xc0, 0x00, 0x40, 0x08, 0x40, 0x00, 0x00, 0x1f, 0xf0, 
+	0x00, 0x00, 0x08, 0x40, 0x00, 0x40, 0x04, 0xc0, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00
+};
+// 'dot_icon', 1x64px
+static const unsigned char PROGMEM dot_icon [] = {
+	0x80, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 
+	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 
+	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 
+	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00
+};
+// 'xep_hang_icon', 16x16px
+static const unsigned char PROGMEM chart_icon [] = {
+	0x10, 0x00, 0x10, 0x00, 0x6c, 0x00, 0x28, 0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7c, 0x00, 
+	0x44, 0x00, 0x57, 0xe0, 0x54, 0x20, 0x54, 0x20, 0x54, 0x3e, 0x44, 0x22, 0x44, 0x22, 0x7f, 0xfe
+};
+// 'setting_icon', 16x16px
+static const unsigned char PROGMEM setting_icon [] = {
+	0x03, 0xc0, 0x12, 0x48, 0x3e, 0x7c, 0x60, 0x06, 0x20, 0x04, 0x23, 0xc4, 0xe4, 0x27, 0x84, 0x21, 
+	0x84, 0x21, 0xe4, 0x27, 0x23, 0xc4, 0x20, 0x04, 0x60, 0x06, 0x3e, 0x7c, 0x12, 0x48, 0x03, 0xc0
+};
+// 'exit_icon', 16x16px
+static const unsigned char PROGMEM exit_icon [] = {
+	0x00, 0x00, 0x7f, 0x80, 0xff, 0xc0, 0xff, 0xc0, 0xff, 0xd8, 0xff, 0xcc, 0xff, 0xc6, 0xfc, 0x3f, 
+	0xfc, 0x3f, 0xff, 0xc6, 0xff, 0xcc, 0xff, 0xd8, 0xff, 0xc0, 0xff, 0xc0, 0x7f, 0x80, 0x00, 0x00
+};
 
 // Structs
 typedef struct {
@@ -77,7 +104,7 @@ void view_scr_menu_game() {
 	//scroll bar
 	view_render.drawBitmap(	AR_GAME_MENU_SCROLL_BAR_AXIS_X, \
 							AR_GAME_MENU_SCROLL_BAR_AXIS_Y, \
-							epd_bitmap_Cham_Cham, \
+							dot_icon, \
 							1, \
 							SCREEN_H, \
 							WHITE);
@@ -86,7 +113,6 @@ void view_scr_menu_game() {
 							AR_GAME_MENU_SCROLL_BAR_SIZE_W, \
 							AR_GAME_MENU_SCROLL_BAR_SIZE_H, \
 							WHITE);
-
 	// Frames White
 	view_render.fillRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
 								menu_location.chosse - AR_GAME_MENU_FRAMES_AXIS_Y, \
@@ -94,7 +120,6 @@ void view_scr_menu_game() {
 								AR_GAME_MENU_FRAMES_SIZE_H, \
 								AR_GAME_MENU_FRAMES_SIZE_R, \
 								WHITE);
-
 	// Frames
 	view_render.drawRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
 								MENU_ITEM_ARRDESS_1-AR_GAME_MENU_FRAMES_AXIS_Y, \
@@ -120,7 +145,6 @@ void view_scr_menu_game() {
 								AR_GAME_MENU_FRAMES_SIZE_H, \
 								AR_GAME_MENU_FRAMES_SIZE_R, \
 								WHITE);
-
 	// Icon
 	view_render.drawBitmap(	AR_GAME_MENU_ICON_AXIS_X, \
 							MENU_ITEM_ARRDESS_1-AR_GAME_MENU_ICON_AXIS_Y, \
@@ -146,7 +170,6 @@ void view_scr_menu_game() {
 							AR_GAME_MENU_ICON_SIZE_W, \
 							AR_GAME_MENU_ICON_SIZE_H, \
 							menu_chosse.exit);
-
 	// Text Menu
 	view_render.setTextSize(1);
 	view_render.setTextColor(menu_chosse.archery_game);

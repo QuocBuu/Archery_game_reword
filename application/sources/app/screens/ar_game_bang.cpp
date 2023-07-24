@@ -8,16 +8,16 @@ do { \
     for (uint8_t i = 0; i < NUM_BANG; i++) { \
         bang[i].x = 0; \
         bang[i].y = 0; \
-        bang[i].display = BLACK; \
-        bang[i].animation = 1; \
+        bang[i].visible = BLACK; \
+        bang[i].action_image = 1; \
     } \
 } while (0);
 
 #define AR_GAME_BANG_RESET() \
 do { \
     for (uint8_t i = 0; i < NUM_BANG; i++) { \
-        bang[i].display = BLACK; \
-        bang[i].animation = 1; \
+        bang[i].visible = BLACK; \
+        bang[i].action_image = 1; \
     } \
 } while (0);
 
@@ -25,13 +25,13 @@ ar_game_bang bang[NUM_BANG];
 
 void ar_game_bang_update() {
     for (uint8_t i = 0; i < NUM_BANG; i++) {
-        if (bang[i].display == WHITE) {
-            bang[i].animation++;
+        if (bang[i].visible == WHITE) {
+            bang[i].action_image++;
         }
-        if (bang[i].animation == 4) {
-            bang[i].animation = 1;
-            bang[i].display = BLACK;
-            meteoroid[i].display = WHITE;
+        if (bang[i].action_image == 4) {
+            bang[i].action_image = 1;
+            bang[i].visible = BLACK;
+            meteoroid[i].visible = WHITE;
         }
     }
 }

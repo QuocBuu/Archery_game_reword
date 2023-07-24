@@ -22,12 +22,11 @@
 #define SIZE_BITMAP_BANG_II_X    (10)
 #define SIZE_BITMAP_BANG_II_Y    (10)
 
-struct ar_game_bang
-{
+typedef struct {
+    bool visible;
     uint32_t x, y;
-    bool display;
-    uint8_t animation;
-};
+    uint8_t action_image;
+} ar_game_bang;
 
 extern ar_game_bang bang[NUM_BANG];
 

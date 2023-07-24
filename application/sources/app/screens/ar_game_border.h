@@ -18,14 +18,14 @@
 
 #include "buzzer.h"
 
-#define AXIT_X_BORDER           (15)
-#define AXIT_Y_BORDER_ON        (2)
-#define AXIT_Y_BORDER_UNDER     (52)
+#define AXIS_X_BORDER           (15)
+#define AXIS_Y_BORDER_ON        (2)
+#define AXIS_Y_BORDER_UNDER     (52)
 
 typedef struct {
+    bool visible;
 	uint32_t x, y;
-    bool display;
-    uint8_t animation;
+    uint8_t action_image;
 } ar_game_border;
 
 extern uint32_t score;

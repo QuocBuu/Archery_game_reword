@@ -161,5 +161,4 @@ build_ak-base-kit-stm32l151-application/scr_archery_game.o: \
  sources/app/screens/ar_game_archery.h \
  sources/app/screens/ar_game_arrow.h sources/app/screens/ar_game_bang.h \
  sources/app/screens/ar_game_border.h \
- sources/app/screens/ar_game_meteoroid.h \
- sources/app/screens/bitmap_archery_game.h
+ sources/app/screens/ar_game_meteoroid.h
