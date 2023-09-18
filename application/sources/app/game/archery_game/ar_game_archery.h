@@ -28,6 +28,5 @@ typedef struct {
 } ar_game_archery_t;
 
 extern ar_game_archery_t archery;
-extern ar_game_archery_t archery;
 
 #endif //__AR_GAME_ARCHERY_H__

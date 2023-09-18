@@ -30,10 +30,10 @@
 #include "ar_game_meteoroid.h"
 
 #define GAME_OFF		(0)
-#define GAME_ON			(1)
+#define GAME_PLAY		(1)
 #define GAME_OVER		(2)
 
-extern uint8_t ar_game_status;
+extern uint8_t ar_game_state;
 extern ar_game_setting_t settingsetup;
 
 extern view_dynamic_t dyn_view_item_archery_game;

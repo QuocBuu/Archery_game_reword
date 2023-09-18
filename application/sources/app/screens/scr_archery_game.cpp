@@ -5,7 +5,7 @@
 /*****************************************************************************/
 /* Variable Declaration - Archery game screen */
 /*****************************************************************************/
-uint8_t ar_game_status; 
+uint8_t ar_game_state; 
 ar_game_setting_t settingsetup;
 
 /*****************************************************************************/
@@ -14,21 +14,21 @@ ar_game_setting_t settingsetup;
 void ar_game_frame_display() {
 	view_render.setTextSize(1);
 	view_render.setTextColor(WHITE);
-	view_render.setCursor(2,55);
+	view_render.setCursor(5,55);
 	view_render.print("Arrow:");
 	view_render.print(settingsetup.num_arrow);
 	view_render.setCursor(60,55);
 	view_render.print(" Score:");
 	view_render.print(ar_game_score);
 	view_render.drawLine(0, LCD_HEIGHT, 	LCD_WIDTH, LCD_HEIGHT,		WHITE);
-	view_render.drawLine(0, LCD_HEIGHT-10, 	LCD_WIDTH, LCD_HEIGHT-10,	WHITE);
+	view_render.drawLine(0, LCD_HEIGHT-11, 	LCD_WIDTH, LCD_HEIGHT-11,	WHITE);
 	view_render.drawRect(0, 0, 128, 64, 1);
 }
 
 void ar_game_archery_display() {
 	if (archery.visible == WHITE && settingsetup.num_arrow != 0) {
 		view_render.drawBitmap(	archery.x, \
-								archery.y - 10, \
+								archery.y - 11, \
 								bitmap_archery_I, \
 								SIZE_BITMAP_ARCHERY_X, \
 								SIZE_BITMAP_ARCHERY_Y, \
@@ -36,7 +36,7 @@ void ar_game_archery_display() {
 	}
 	else if (archery.visible == WHITE && settingsetup.num_arrow == 0) {
 		view_render.drawBitmap(	archery.x, \
-								archery.y - 10, \
+								archery.y - 11, \
 								bitmap_archery_II, \
 								SIZE_BITMAP_ARCHERY_X, \
 								SIZE_BITMAP_ARCHERY_Y, \
@@ -48,7 +48,7 @@ void ar_game_arrow_display() {
 	for (uint8_t i = 0; i < MAX_NUM_ARROW; i++) {
 		if (arrow[i].visible == WHITE) {
 			view_render.drawBitmap(	arrow[i].x, \
-									arrow[i].y, \
+									arrow[i].y-1, \
 									bitmap_arrow, \
 									SIZE_BITMAP_ARROW_X, \
 									SIZE_BITMAP_ARROW_Y, \
@@ -71,34 +71,6 @@ void ar_game_meteoroid_display() {
 }
 
 void ar_game_bang_display() {
-	// for (uint8_t i = 0; i < NUM_BANG; i++) {
-	// 	if (bang[i].visible == WHITE) {
-	// 		if (bang[i].action_image == 1) {
-	// 			view_render.drawBitmap(	bang[i].x, \
-	// 									bang[i].y, \
-	// 									bitmap_bang_I, \
-	// 									SIZE_BITMAP_BANG_I_X, \
-	// 									SIZE_BITMAP_BANG_I_Y, \
-	// 									WHITE);
-	// 		}
-	// 		else if (bang[i].action_image == 2) {
-	// 			view_render.drawBitmap(	bang[i].x, \
-	// 									bang[i].y, \
-	// 									bitmap_bang_II, \
-	// 									SIZE_BITMAP_BANG_I_X, \
-	// 									SIZE_BITMAP_BANG_I_Y, \
-	// 			 						WHITE);
-	// 		}
-	// 		else if (bang[i].action_image == 3) {
-	// 			view_render.drawBitmap( bang[i].x + 2, \
-	// 									bang[i].y - 1, \
-	// 									bitmap_bang_III, \
-	// 									SIZE_BITMAP_BANG_II_X, \
-	// 									SIZE_BITMAP_BANG_II_Y, \
-	// 			 						WHITE);
-	// 		}
-	// 	}
-	// }
 	for (uint8_t i = 0; i < NUM_BANG; i++) {
 		if (bang[i].visible == WHITE) {
 			view_render.drawBitmap(	bang[i].x, \
@@ -119,7 +91,7 @@ void ar_game_border_display() {
 									WHITE);
 		for (uint8_t i = 0; i < NUM_METEOROIDS; i++) {
 			view_render.fillCircle(	border.x, \
-									meteoroid[i].y + 5, \
+									meteoroid[i].y + 4, \
 									1, \
 									WHITE);
 		}
@@ -144,7 +116,7 @@ view_screen_t scr_archery_game = {
 };
 
 void view_scr_archery_game() {
-	if (ar_game_status == GAME_ON) {
+	if (ar_game_state == GAME_PLAY) {
 		ar_game_frame_display();
 		ar_game_archery_display();
 		ar_game_arrow_display();
@@ -152,12 +124,12 @@ void view_scr_archery_game() {
 		ar_game_bang_display();
 		ar_game_border_display();
 	}
-	else if (ar_game_status == GAME_OVER) {
+	else if (ar_game_state == GAME_OVER) {
 		view_render.clear();
 		view_render.setTextSize(2);
 		view_render.setTextColor(WHITE);
 		view_render.setCursor(17, 24);
-		view_render.print("ws2 LOSE");
+		view_render.print("YOU LOSE");
 	}
 }
 
@@ -198,8 +170,8 @@ void scr_archery_game_handle(ak_msg_t* msg) {
 		task_post_pure_msg(AR_GAME_BORDER_ID, 	 	AR_GAME_BORDER_SETUP);
 		// Setup timer
 		ar_game_time_tick_setup();
-		// Status update
-		ar_game_status = GAME_ON;
+		// State update
+		ar_game_state = GAME_PLAY;
 	}
 		break;
 
@@ -231,16 +203,16 @@ void scr_archery_game_handle(ak_msg_t* msg) {
 					TIMER_ONE_SHOT);
 		// Save and reset Score
 		ar_game_save_and_reset_score();
-		// Status update
-		ar_game_status = GAME_OVER;
+		// State update
+		ar_game_state = GAME_OVER;
 	}
 		BUZZER_PlayTones(tones_3beep);
 		break;
 
 	case AR_GAME_EXIT_GAME: {
 		APP_DBG_SIG("AR_GAME_EXIT_GAME\n");
-		// Status update
-		ar_game_status = GAME_OFF;
+		// State update
+		ar_game_state = GAME_OFF;
 		// Change the screen
 		SCREEN_TRAN(scr_game_over_handle, &scr_game_over);		
 	}

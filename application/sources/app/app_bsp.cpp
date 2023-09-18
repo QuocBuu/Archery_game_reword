@@ -32,7 +32,7 @@ void btn_mode_callback(void* b) {
 
 	case BUTTON_SW_STATE_RELEASED: {
 		APP_DBG("[btn_mode_callback] BUTTON_SW_STATE_RELEASED\n");
-		if (ar_game_status != GAME_OFF) {
+		if (ar_game_state != GAME_OFF) {
 			task_post_pure_msg(AR_GAME_ARROW_ID, AR_GAME_ARROW_SHOOT);
 		}
 		else {
@@ -63,7 +63,7 @@ void btn_up_callback(void* b) {
 
 	case BUTTON_SW_STATE_RELEASED: {
 		APP_DBG("[btn_up_callback] BUTTON_SW_STATE_RELEASED\n");
-		if (ar_game_status != GAME_OFF) {
+		if (ar_game_state != GAME_OFF) {
 			task_post_pure_msg(AR_GAME_ARCHERY_ID, AR_GAME_ARCHERY_UP);
 		}
 		else {
@@ -94,7 +94,7 @@ void btn_down_callback(void* b) {
 
 	case BUTTON_SW_STATE_RELEASED: {
 		APP_DBG("[btn_down_callback] BUTTON_SW_STATE_RELEASED\n");
-		if (ar_game_status != GAME_OFF) {
+		if (ar_game_state != GAME_OFF) {
 			task_post_pure_msg(AR_GAME_ARCHERY_ID, AR_GAME_ARCHERY_DOWN);
 		}
 		else {

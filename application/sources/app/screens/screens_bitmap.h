@@ -35,10 +35,6 @@ extern const unsigned char PROGMEM setting_icon [];
 extern const unsigned char PROGMEM exit_icon [];
 
 extern const uint8_t *bitmap_bang[4];
-// extern const unsigned char PROGMEM epd_bitmap_bang_1 [];
-// extern const unsigned char PROGMEM epd_bitmap_bang_2 [];
-// extern const unsigned char PROGMEM epd_bitmap_bang_3 [];
-// extern const unsigned char PROGMEM epd_bitmap_bang_4 [];
 
 extern const uint8_t *bitmap_meteoroid[3];
 

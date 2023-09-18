@@ -44,6 +44,31 @@ void view_scr_startup() {
 /*****************************************************************************/
 /* Handle - startup */
 /*****************************************************************************/
+void check_setting_game() {
+#define INIT_SETTING_GAME_ARROW_SPEED		(5)
+#define INIT_SETTING_GAME_METEOROID_SPEED	(1)
+#define INIT_SETTING_GAME_NUM_ARROW			(5)
+
+	// Read setting data
+	eeprom_read(	EEPROM_SETTING_START_ADDR, \
+							(uint8_t*)&settingdata, \
+							sizeof(settingdata));
+	// Check data
+		if (settingdata.meteoroid_speed == 0 \
+			|| settingdata.arrow_speed == 0 \
+			|| settingdata.num_arrow == 0) {
+			// Init data setting
+			settingdata.arrow_speed = INIT_SETTING_GAME_ARROW_SPEED;
+			settingdata.meteoroid_speed = INIT_SETTING_GAME_METEOROID_SPEED;
+			settingdata.num_arrow = INIT_SETTING_GAME_NUM_ARROW;
+			// Write data
+			eeprom_write(	EEPROM_SETTING_START_ADDR, \
+								(uint8_t*)&settingdata, \
+								sizeof(settingdata));
+		}
+	BUZZER_Sleep(settingdata.silent);
+}
+
 void scr_startup_handle(ak_msg_t* msg) {
 	switch (msg->sig) {
 	case AC_DISPLAY_INITIAL: {
@@ -54,11 +79,8 @@ void scr_startup_handle(ak_msg_t* msg) {
 					AC_DISPLAY_SHOW_LOGO, \
 					AC_DISPLAY_STARTUP_INTERVAL, \
 					TIMER_ONE_SHOT);
-		// Read setting
-		eeprom_read(	EEPROM_SETTING_START_ADDR, \
-						(uint8_t*)&settingdata, \
-						sizeof(settingdata));
-		BUZZER_Sleep(settingdata.silent);
+		// Check setting game
+		check_setting_game();
 	}
 		break;
 

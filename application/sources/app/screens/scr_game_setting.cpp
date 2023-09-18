@@ -32,14 +32,16 @@ void view_scr_game_setting() {
 	view_render.setTextColor(WHITE);
 	// Icon
 	view_render.drawBitmap(	0, \
-							setting_location_chosse - AR_GAME_SETTING_CHOSSE_ICON_AXIS_Y, \
+							setting_location_chosse - \
+							AR_GAME_SETTING_CHOSSE_ICON_AXIS_Y, \
 							chosse_icon, \
 							AR_GAME_SETTING_CHOSSE_ICON_SIZE_W, \
 							AR_GAME_SETTING_CHOSSE_ICON_SIZE_H, \
 							WHITE);
 	if (settingdata.silent == 0) {
 		view_render.drawBitmap(	109, 
-								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + AR_GAME_SETTING_FRAMES_STEP*3-12, \
+								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + \
+								AR_GAME_SETTING_FRAMES_STEP*3-12, \
 								speaker_1, \
 								7, \
 								7, \
@@ -47,7 +49,8 @@ void view_scr_game_setting() {
 	}
 	else {
 		view_render.drawBitmap(	109, \
-								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + AR_GAME_SETTING_FRAMES_STEP*3-12, \
+								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + \
+								AR_GAME_SETTING_FRAMES_STEP*3-12, \
 								speaker_2, \
 								7, \
 								7, \
@@ -61,19 +64,22 @@ void view_scr_game_setting() {
 								AR_GAME_SETTING_FRAMES_SIZE_R, \
 								WHITE);
 	view_render.drawRoundRect(	AR_GAME_SETTING_FRAMES_AXIS_X, \
-								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + AR_GAME_SETTING_FRAMES_STEP, \
+								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + \
+								AR_GAME_SETTING_FRAMES_STEP, \
 								AR_GAME_SETTING_FRAMES_SIZE_W, \
 								AR_GAME_SETTING_FRAMES_SIZE_H, \
 								AR_GAME_SETTING_FRAMES_SIZE_R, \
 								WHITE);
 	view_render.drawRoundRect(	AR_GAME_SETTING_FRAMES_AXIS_X, \
-								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + AR_GAME_SETTING_FRAMES_STEP*2, \
+								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + \
+								AR_GAME_SETTING_FRAMES_STEP*2, \
 								AR_GAME_SETTING_FRAMES_SIZE_W, \
 								AR_GAME_SETTING_FRAMES_SIZE_H, \
 								AR_GAME_SETTING_FRAMES_SIZE_R, \
 								WHITE);
 	view_render.drawRoundRect(	AR_GAME_SETTING_FRAMES_AXIS_X, \
-								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + AR_GAME_SETTING_FRAMES_STEP*3, \
+								AR_GAME_SETTING_FRAMES_AXIS_Y_1 + \
+								AR_GAME_SETTING_FRAMES_STEP*3, \
 								AR_GAME_SETTING_FRAMES_SIZE_W, \
 								AR_GAME_SETTING_FRAMES_SIZE_H, \
 								AR_GAME_SETTING_FRAMES_SIZE_R, \
