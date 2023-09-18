@@ -169,14 +169,10 @@ void (* const isr_vector[])() = {
 		default_handler,						//	SPI2
 		uart1_irq,								//	USART1
 
-		#if defined (TASK_MBMASTER_EN) && defined (TASK_ZIGBEE_EN)
+		#if defined (TASK_MBMASTER_EN)
 		default_handler,						//	USART2
 		#elif defined (TASK_MBMASTER_EN)
 		vMBPUSART2ISR,							//	USART2
-		#elif defined (TASK_ZIGBEE_EN)
-		uart2_irq,								//	USART2
-		#else
-		default_handler,						//	USART2
 		#endif
 
 		default_handler,						//	USART3
@@ -430,9 +426,6 @@ void exti_line1_irq() {
 	task_entry_interrupt();
 
 	if (EXTI_GetITStatus(EXTI_Line1) != RESET) {
-#if defined(IF_NETWORK_NRF24_EN)
-		sys_irq_nrf24l01();
-#endif
 		EXTI_ClearITPendingBit(EXTI_Line1);
 	}
 

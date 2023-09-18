@@ -19,10 +19,9 @@
 #include <math.h>
 #include <vector>
 
-#include "scr_menu_game.h"
+#include "screens.h"
 
 extern view_dynamic_t dyn_view_idle;
-
 extern view_screen_t scr_idle;
 extern void scr_idle_handle(ak_msg_t* msg);
 

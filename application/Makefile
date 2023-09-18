@@ -13,7 +13,7 @@ Print = @echo "~"
 NAME_MODULE = ak-base-kit-stm32l151-application
 PROJECT = $(NAME_MODULE)
 
-GCC_PATH		= $(HOME)/Workspace/Tools/gcc-arm-none-eabi-10.3-2021.10
+GCC_PATH			= $(HOME)/Workspace/Tools/gcc-arm-none-eabi-10.3-2021.10
 PROGRAMER_PATH		= $(HOME)/Workspace/Tools/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
 OPENOCD_CFG_PATH	= /usr/local/share/openocd/scripts/board/stm32ldiscovery.cfg
 
@@ -39,9 +39,6 @@ CONSOLE_BAUDRATE_DEF = -DSYS_CONSOLE_BAUDRATE=$(SYS_CONSOLE_BAUDRATE)
 #|------------|----------------------------------|--------------|---------|------------|-------------|
 OPTIMIZE_OPTION = -g -Os
 
-# RTOS development option.
-RTOS_DEV_OPTION = -URTOS_DEV_EN
-
 # Release build option, that is used in fatal function, restart system when fatal, and debug levels.
 RELEASE_OPTION = -URELEASE
 
@@ -53,10 +50,8 @@ USB_OPTION = -UUSING_USB_MOD
 
 # Interface compile option.
 IF_LINK_OPTION = -DIF_LINK_UART_EN
-IF_NETWORK_NRF24_OPTION = -UIF_NETWORK_NRF24_EN
 
 # Task compile option.
-TASK_ZIGBEE_OPTION = -UTASK_ZIGBEE_EN
 TASK_MBMASTER_OPTION = -DTASK_MBMASTER_EN
 
 # Include sources file
@@ -64,7 +59,6 @@ include sources/ak/Makefile.mk
 include sources/app/Makefile.mk
 include sources/common/Makefile.mk
 include sources/driver/Makefile.mk
-include sources/libraries/Makefile.mk
 include sources/sys/Makefile.mk
 include sources/networks/Makefile.mk
 include sources/platform/stm32l/Makefile.mk

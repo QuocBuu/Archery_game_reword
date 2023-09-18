@@ -1,71 +1,128 @@
 #include "scr_menu_game.h"
+/*****************************************************************************/
+/* Instructions for adding new items to the menu*/
+/*****************************************************************************/
+/*  ** Để làm nhanh nhấn "Ctrl + F" để tìm theo từ khóa **
+	Bước 1: Chuẩn bị icon cho item sẽ thêm vào kích thước 13-18 px*px
+	Bước 2: Thêm 1 item vào menu
+			- Tăng số lượng item: tăng "NUMBER_MENU_ITEMS" thêm 1
+			- Thêm định danh: tăng "NUMBER_MENU_ITEMS" thêm 1 item
+			- Thêm định dạng màu: tăng "MENU_ITEMS_ICON_COLOR" thêm 1 item
+	Bước 3: Thêm tên cho item vào "menu_items_name[]"
+	Bước 4: Thêm icon cho item:
+			- Thêm icon: menu_items_icon[]
+			- Thêm kich thước: menu_items_icon_size_w[], menu_items_icon_size_h[]
+	Bước 5: Thêm địa chỉ cho item:
+			- Thêm 1 item vào: "screen_tran_menu()" rồi điền địa chỉ muốn 
+			chuyển tới.
+	## Nếu icon không cân xứng vào "menu_items_icon_axis_y[3]" để điều chỉnh lại.
+*/
 
 /*****************************************************************************/
 /* Variable and Struct Declaration - Menu game */
 /*****************************************************************************/
+// Screen 
 #define STEP_MENU_CHOSSE				(22)
 #define NUMBER_MENU_ITEMS				(4)
-#define SCREEN_W						(128)
-#define	SCREEN_H						(64)
+#define	SCREEN_MENU_H					(64)
 
-#define MENU_ITEM_ARRDESS_1				(STEP_MENU_CHOSSE)
-#define MENU_ITEM_ARRDESS_2				(STEP_MENU_CHOSSE*2)
-#define MENU_ITEM_ARRDESS_3				(STEP_MENU_CHOSSE*3)
-#define MENU_ITEM_ARRDESS_4				(STEP_MENU_CHOSSE*4)
+#define MENU_ITEMS_ICON_COLOR() \
+do { \
+	menu_items_icon_color[0]	= !menu_chosse.items.is_item_1; \
+	menu_items_icon_color[1]	= !menu_chosse.items.is_item_2; \
+	menu_items_icon_color[2]	= !menu_chosse.items.is_item_3; \
+	menu_items_icon_color[3]	= !menu_chosse.items.is_item_4; \
+} while(0);
 
-// 'archery_icon', 15x15px
-static const unsigned char PROGMEM archery_icon [] = {
-    0x04, 0x00, 0x02, 0x00, 0x01, 0x00, 0x04, 0xc0, 0x00, 0x40, 0x08, 0x40, 0x00, 0x00, 0x1f, 0xf0, 
-	0x00, 0x00, 0x08, 0x40, 0x00, 0x40, 0x04, 0xc0, 0x01, 0x00, 0x02, 0x00, 0x04, 0x00
-};
-// 'dot_icon', 1x64px
-static const unsigned char PROGMEM dot_icon [] = {
-	0x80, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 
-	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 
-	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 
-	0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00, 0x80, 0x00
-};
-// 'xep_hang_icon', 16x16px
-static const unsigned char PROGMEM chart_icon [] = {
-	0x10, 0x00, 0x10, 0x00, 0x6c, 0x00, 0x28, 0x00, 0x38, 0x00, 0x00, 0x00, 0x00, 0x00, 0x7c, 0x00, 
-	0x44, 0x00, 0x57, 0xe0, 0x54, 0x20, 0x54, 0x20, 0x54, 0x3e, 0x44, 0x22, 0x44, 0x22, 0x7f, 0xfe
-};
-// 'setting_icon', 16x16px
-static const unsigned char PROGMEM setting_icon [] = {
-	0x03, 0xc0, 0x12, 0x48, 0x3e, 0x7c, 0x60, 0x06, 0x20, 0x04, 0x23, 0xc4, 0xe4, 0x27, 0x84, 0x21, 
-	0x84, 0x21, 0xe4, 0x27, 0x23, 0xc4, 0x20, 0x04, 0x60, 0x06, 0x3e, 0x7c, 0x12, 0x48, 0x03, 0xc0
-};
-// 'exit_icon', 16x16px
-static const unsigned char PROGMEM exit_icon [] = {
-	0x00, 0x00, 0x7f, 0x80, 0xff, 0xc0, 0xff, 0xc0, 0xff, 0xd8, 0xff, 0xcc, 0xff, 0xc6, 0xfc, 0x3f, 
-	0xfc, 0x3f, 0xff, 0xc6, 0xff, 0xcc, 0xff, 0xd8, 0xff, 0xc0, 0xff, 0xc0, 0x7f, 0x80, 0x00, 0x00
+struct menu_items{
+// menu items
+	unsigned int is_item_1 : 1;
+	unsigned int is_item_2 : 1;
+	unsigned int is_item_3 : 1;
+	unsigned int is_item_4 : 1;
 };
 
-// Structs
+// Menu items name
+static char menu_items_name[NUMBER_MENU_ITEMS][20] = {
+	"   Archery Game   ",		// item 1
+	"   Setting        ",		// item 2
+	"   Charts         ",		// item 3
+	"   Exit           ",		// item 4
+};
+
+// Menu items icon
+static const uint8_t *menu_items_icon[NUMBER_MENU_ITEMS] = {
+	archery_icon,				// item 1
+	setting_icon,				// item 2
+	chart_icon,					// item 3
+	exit_icon,					// item 4
+};
+
+// Menu items size W
+uint8_t menu_items_icon_size_w[NUMBER_MENU_ITEMS] = {
+	15,							// item 1
+	16,							// item 2
+	16,							// item 3
+	15,							// item 4
+};
+
+uint8_t menu_items_icon_size_h[NUMBER_MENU_ITEMS] = {
+	15,							// item 1
+	16,							// item 2
+	16,							// item 3
+	15,							// item 4
+};
+
+// Menu items color
+uint8_t menu_items_icon_color[NUMBER_MENU_ITEMS];
+// Menu items axis Y
+uint8_t menu_items_icon_axis_y[3] = {
+	2,							// icon frame 1
+	24,							// icon frame 2
+	46							// icon frame 3
+};
+
+// Screen and item location on the Menu
 typedef struct {
-	// menu object location
-	uint8_t chosse; 		// lua chon
-	uint8_t scroll_bar;		// thanh truoc 
-	uint8_t screen;			// khung hinh
-} scr_menu_game_location_t;
+	int screen;
+	int location;
+} screen_t;
 
+// Menu items ID
+union scr_menu_t {
+	uint32_t _id = 1;		// if items >> => uint8_t -> uint16_t ->uint32_t
+	menu_items items;
+};
+
+// Scroll bar
 typedef struct {
-	// menu items
-	bool archery_game;
-	bool setting;
-	bool charts;
-	bool exit;
-} scr_menu_game_chosse_t;
+	uint8_t axis_x = 126;
+	uint8_t axis_y = 0;
+	uint8_t size_W = 3;
+	uint8_t size_h = SCREEN_MENU_H / NUMBER_MENU_ITEMS;
+} scr_menu_scroll_bar_t;
 
-static scr_menu_game_location_t menu_location;
-static scr_menu_game_chosse_t menu_chosse;
+// Frames
+typedef struct {
+	uint8_t axis_x = 0;
+	uint8_t axis_y = 0;
+	uint8_t size_w = 123;
+	uint8_t size_h = 20;
+	uint8_t size_r = 3;
+} scr_menu_frames_t;
+
+screen_t screen_menu;
+scr_menu_t menu_chosse;
+scr_menu_scroll_bar_t scroll_bar;
+scr_menu_frames_t frame_white;
+scr_menu_frames_t frame[3];
 
 /*****************************************************************************/
 /* View - Menu game */
 /*****************************************************************************/
 static void view_scr_menu_game();
 
-view_dynamic_t dyn_view_item_menu_game = {
+view_dynamic_t dyn_view_menu = {
 	{
 		.item_type = ITEM_TYPE_DYNAMIC,
 	},
@@ -73,7 +130,7 @@ view_dynamic_t dyn_view_item_menu_game = {
 };
 
 view_screen_t scr_menu_game = {
-	&dyn_view_item_menu_game,
+	&dyn_view_menu,
 	ITEM_NULL,
 	ITEM_NULL,
 
@@ -81,204 +138,168 @@ view_screen_t scr_menu_game = {
 };
 
 void view_scr_menu_game() {
-// Scroll bar
-#define AR_GAME_MENU_SCROLL_BAR_AXIS_X		(126)
-#define AR_GAME_MENU_SCROLL_BAR_AXIS_Y		(0)
-#define AR_GAME_MENU_SCROLL_BAR_SIZE_W		(3)
-#define AR_GAME_MENU_SCROLL_BAR_SIZE_H		(SCREEN_H / NUMBER_MENU_ITEMS)
-// Frames
-#define AR_GAME_MENU_FRAMES_AXIS_X			(0)
-#define AR_GAME_MENU_FRAMES_AXIS_Y			(STEP_MENU_CHOSSE + menu_location.screen)
-#define AR_GAME_MENU_FRAMES_SIZE_W			(123)
-#define AR_GAME_MENU_FRAMES_SIZE_H			(20)
-#define AR_GAME_MENU_FRAMES_SIZE_R			(3)
-// ICON	
 #define AR_GAME_MENU_ICON_AXIS_X			(7)
-#define AR_GAME_MENU_ICON_AXIS_Y			(AR_GAME_MENU_FRAMES_AXIS_Y - 2)
-#define AR_GAME_MENU_ICON_SIZE_W			(15)
-#define AR_GAME_MENU_ICON_SIZE_H			(15)
-// Text
 #define AR_GAME_MENU_TEXT_AXIS_X			(20)
-#define AR_GAME_MENU_TEXT_AXIS_Y			(AR_GAME_MENU_ICON_AXIS_Y - 5)
-
-	//scroll bar
-	view_render.drawBitmap(	AR_GAME_MENU_SCROLL_BAR_AXIS_X, \
-							AR_GAME_MENU_SCROLL_BAR_AXIS_Y, \
+	// Scroll bar
+	view_render.fillRect(	scroll_bar.axis_x - 1, \
+							scroll_bar.axis_y, \
+							scroll_bar.size_W, \
+							scroll_bar.size_h, \
+							WHITE);
+	view_render.drawBitmap(	scroll_bar.axis_x, \
+							0, \
 							dot_icon, \
 							1, \
-							SCREEN_H, \
+							SCREEN_MENU_H, \
 							WHITE);
-	view_render.fillRect(	AR_GAME_MENU_SCROLL_BAR_AXIS_X - 1, \
-							menu_location.scroll_bar, \
-							AR_GAME_MENU_SCROLL_BAR_SIZE_W, \
-							AR_GAME_MENU_SCROLL_BAR_SIZE_H, \
-							WHITE);
-	// Frames White
-	view_render.fillRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
-								menu_location.chosse - AR_GAME_MENU_FRAMES_AXIS_Y, \
-								AR_GAME_MENU_FRAMES_SIZE_W, \
-								AR_GAME_MENU_FRAMES_SIZE_H, \
-								AR_GAME_MENU_FRAMES_SIZE_R, \
+	// Frame White
+	view_render.fillRoundRect(	frame_white.axis_x, \
+								frame_white.axis_y, \
+								frame_white.size_w, \
+								frame_white.size_h, \
+								frame_white.size_r, \
 								WHITE);
+	for (uint8_t i = 0; i < 3; i++) {
 	// Frames
-	view_render.drawRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
-								MENU_ITEM_ARRDESS_1-AR_GAME_MENU_FRAMES_AXIS_Y, \
-								AR_GAME_MENU_FRAMES_SIZE_W, \
-								AR_GAME_MENU_FRAMES_SIZE_H, \
-								AR_GAME_MENU_FRAMES_SIZE_R, \
-								WHITE);
-	view_render.drawRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
-								MENU_ITEM_ARRDESS_2-AR_GAME_MENU_FRAMES_AXIS_Y, \
-								AR_GAME_MENU_FRAMES_SIZE_W, \
-								AR_GAME_MENU_FRAMES_SIZE_H, \
-								AR_GAME_MENU_FRAMES_SIZE_R, \
-								WHITE);
-	view_render.drawRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
-								MENU_ITEM_ARRDESS_3-AR_GAME_MENU_FRAMES_AXIS_Y, \
-								AR_GAME_MENU_FRAMES_SIZE_W, \
-								AR_GAME_MENU_FRAMES_SIZE_H, \
-								AR_GAME_MENU_FRAMES_SIZE_R, \
-								WHITE);
-	view_render.drawRoundRect(	AR_GAME_MENU_FRAMES_AXIS_X, \
-								MENU_ITEM_ARRDESS_4-AR_GAME_MENU_FRAMES_AXIS_Y, \
-								AR_GAME_MENU_FRAMES_SIZE_W, \
-								AR_GAME_MENU_FRAMES_SIZE_H, \
-								AR_GAME_MENU_FRAMES_SIZE_R, \
-								WHITE);
+		view_render.drawRoundRect(	frame[i].axis_x, \
+									frame[i].axis_y, \
+									frame[i].size_w, \
+									frame[i].size_h, \
+									frame[i].size_r, \
+									WHITE);
 	// Icon
-	view_render.drawBitmap(	AR_GAME_MENU_ICON_AXIS_X, \
-							MENU_ITEM_ARRDESS_1-AR_GAME_MENU_ICON_AXIS_Y, \
-							archery_icon, \
-							AR_GAME_MENU_ICON_SIZE_W, \
-							AR_GAME_MENU_ICON_SIZE_H, \
-							menu_chosse.archery_game);
-	view_render.drawBitmap(	AR_GAME_MENU_ICON_AXIS_X, \
-							MENU_ITEM_ARRDESS_2-AR_GAME_MENU_ICON_AXIS_Y, \
-							setting_icon, \
-							AR_GAME_MENU_ICON_SIZE_W + 1, \
-							AR_GAME_MENU_ICON_SIZE_H + 1, \
-							menu_chosse.setting);
-	view_render.drawBitmap(	AR_GAME_MENU_ICON_AXIS_X, \
-							MENU_ITEM_ARRDESS_3-AR_GAME_MENU_ICON_AXIS_Y, \
-							chart_icon, \
-							AR_GAME_MENU_ICON_SIZE_W + 1, \
-							AR_GAME_MENU_ICON_SIZE_H + 1, \
-							menu_chosse.charts);
-	view_render.drawBitmap(	AR_GAME_MENU_ICON_AXIS_X, \
-							MENU_ITEM_ARRDESS_4-AR_GAME_MENU_ICON_AXIS_Y, \
-							exit_icon, \
-							AR_GAME_MENU_ICON_SIZE_W, \
-							AR_GAME_MENU_ICON_SIZE_H, \
-							menu_chosse.exit);
+		view_render.drawBitmap(	AR_GAME_MENU_ICON_AXIS_X, \
+								menu_items_icon_axis_y[i], \
+								menu_items_icon[screen_menu.screen + i], \
+								menu_items_icon_size_w[screen_menu.screen + i], \
+								menu_items_icon_size_h[screen_menu.screen + i], \
+								menu_items_icon_color[screen_menu.screen + i]);
+	}
 	// Text Menu
 	view_render.setTextSize(1);
-	view_render.setTextColor(menu_chosse.archery_game);
-    view_render.setCursor(AR_GAME_MENU_TEXT_AXIS_X, MENU_ITEM_ARRDESS_1 - AR_GAME_MENU_TEXT_AXIS_Y);
-	view_render.print("   Archery Game");
-	view_render.setTextColor(menu_chosse.setting);
-    view_render.setCursor(AR_GAME_MENU_TEXT_AXIS_X, MENU_ITEM_ARRDESS_2 - AR_GAME_MENU_TEXT_AXIS_Y);
-	view_render.print("   Setting");
-	view_render.setTextColor(menu_chosse.charts);
-    view_render.setCursor(AR_GAME_MENU_TEXT_AXIS_X, MENU_ITEM_ARRDESS_3 - AR_GAME_MENU_TEXT_AXIS_Y);
-	view_render.print("   Charts");
-	view_render.setTextColor(menu_chosse.exit);
-	view_render.setCursor(AR_GAME_MENU_TEXT_AXIS_X, MENU_ITEM_ARRDESS_4 - AR_GAME_MENU_TEXT_AXIS_Y);
-	view_render.print("   Exit");
+	for (uint8_t i = 0; i < 3; i++) {
+		view_render.setTextColor(menu_items_icon_color[screen_menu.screen + i]);
+		view_render.setCursor(AR_GAME_MENU_TEXT_AXIS_X, menu_items_icon_axis_y[i]+5);
+		view_render.print(menu_items_name[screen_menu.screen + i]);
+	}
 }
 
 /*****************************************************************************/
 /* Handle - Menu game */
 /*****************************************************************************/
 void update_menu_screen_chosse() {
-	switch (menu_location.chosse) {
-		case MENU_ITEM_ARRDESS_1: {
-			menu_chosse.archery_game = BLACK;
-			menu_chosse.setting = WHITE;
-			menu_chosse.charts = WHITE;
-			menu_chosse.exit = WHITE;
-			menu_location.scroll_bar = 0;
-			menu_location.screen = 0;
-		}
-			break;
+	// Frames location
+	frame_white.axis_y =frame[screen_menu.location-screen_menu.screen].axis_y;
+	frame[0].axis_y = 0;
+	frame[1].axis_y = 22;
+	frame[2].axis_y = 44;
+	// update color menu
+	menu_chosse._id = 1<<screen_menu.location;
+	MENU_ITEMS_ICON_COLOR();
+	// update scroll bar
+	scroll_bar.axis_y = (SCREEN_MENU_H*screen_menu.location / NUMBER_MENU_ITEMS);
+}
 
-		case MENU_ITEM_ARRDESS_2: {
-			menu_chosse.archery_game = WHITE;
-			menu_chosse.setting = BLACK;
-			menu_chosse.charts = WHITE;
-			menu_chosse.exit = WHITE;
-			menu_location.scroll_bar = AR_GAME_MENU_SCROLL_BAR_SIZE_H;
-		}
-			break;
-
-		case MENU_ITEM_ARRDESS_3: {
-			menu_chosse.archery_game = WHITE;
-			menu_chosse.setting = WHITE;
-			menu_chosse.charts = BLACK;
-			menu_chosse.exit = WHITE;
-			menu_location.scroll_bar = AR_GAME_MENU_SCROLL_BAR_SIZE_H*2;
-		}
-			break;
-
-		case MENU_ITEM_ARRDESS_4: {
-			menu_chosse.archery_game = WHITE;
-			menu_chosse.setting = WHITE;
-			menu_chosse.charts = WHITE;
-			menu_chosse.exit = BLACK;
-			menu_location.scroll_bar = AR_GAME_MENU_SCROLL_BAR_SIZE_H*3;
-			menu_location.screen = STEP_MENU_CHOSSE;
-		}
-			break;
-		
-		default:
-			break;
+void screen_tran_menu() {
+	switch (screen_menu.location) {
+	case 0:	// item 1
+			SCREEN_TRAN(scr_archery_game_handle,	&scr_archery_game	);
+		break;
+	case 1:	// item 2
+			SCREEN_TRAN(scr_game_setting_handle,	&scr_game_setting	);
+		break;
+	case 2:	// item 3
+			SCREEN_TRAN(scr_charts_game_handle,		&scr_charts_game	);
+		break;
+	case 3: // item 4
+			SCREEN_TRAN(scr_idle_handle,			&scr_idle			);
+		break;
+	
+	default:
+		break;
 	}
 }
 
 void scr_menu_game_handle(ak_msg_t* msg) {
 	switch (msg->sig) {
-		case SCREEN_ENTRY: {
-			APP_DBG_SIG("SCREEN_ENTRY\n");
-			menu_chosse.archery_game = BLACK;
-			menu_chosse.setting = WHITE;
-			menu_chosse.charts = WHITE;
-			menu_chosse.exit = WHITE;
-			menu_location.chosse = MENU_ITEM_ARRDESS_1;
-		}
-			break;
+	case SCREEN_ENTRY: {
+		APP_DBG_SIG("SCREEN_ENTRY\n");
+		view_render.initialize();
+		view_render_display_on();
+		update_menu_screen_chosse();
+		// timer switch to scr_idle
+		timer_set(	AC_TASK_DISPLAY_ID, \
+					AC_DISPLAY_SHOW_IDLE, \
+					AC_DISPLAY_IDLE_INTERVAL, \
+					TIMER_ONE_SHOT);
+	}
+		break;
 
-		case AC_DISPLAY_BUTTON_MODE_RELEASED: {
-			APP_DBG_SIG("AC_DISPLAY_BUTTON_MODE_RELEASED\n");
-			switch (menu_location.chosse){
-				case MENU_ITEM_ARRDESS_1: SCREEN_TRAN(scr_archery_game_handle,	&scr_archery_game	);	break;
-				case MENU_ITEM_ARRDESS_2: SCREEN_TRAN(scr_game_setting_handle,	&scr_game_setting	);	break;
-				case MENU_ITEM_ARRDESS_3: SCREEN_TRAN(scr_charts_game_handle, 	&scr_charts_game	);	break;
-				case MENU_ITEM_ARRDESS_4: SCREEN_TRAN(scr_idle_handle, 			&scr_idle			);	break;
+	case AC_DISPLAY_SHOW_IDLE: {
+		SCREEN_TRAN(scr_idle_handle,&scr_idle);
+	}
+		break;
+
+	case AC_DISPLAY_BUTTON_MODE_RELEASED: {
+		APP_DBG_SIG("AC_DISPLAY_BUTTON_MODE_RELEASED\n");
+		screen_tran_menu();
+	}
+		break;
+
+	case AC_DISPLAY_BUTTON_UP_RELEASED: {
+		APP_DBG_SIG("AC_DISPLAY_BUTTON_UP_RELEASED\n");
+		if (screen_menu.location > 0) {
+			screen_menu.location--;
+		}
+		if (frame_white.axis_y == frame[0].axis_y) {
+			if (screen_menu.screen > 0) {
+				screen_menu.screen--;
 			}
 		}
-			BUZZER_PlayTones(tones_cc);
-			break;
-
-		case AC_DISPLAY_BUTTON_UP_RELEASED: {
-			APP_DBG_SIG("AC_DISPLAY_BUTTON_UP_RELEASED\n");
-			menu_location.chosse -= STEP_MENU_CHOSSE;
-			if (menu_location.chosse < MENU_ITEM_ARRDESS_1) { 
-				menu_location.chosse = MENU_ITEM_ARRDESS_4; 
-			}
-			update_menu_screen_chosse();
+		else if (frame_white.axis_y == frame[1].axis_y) {
+			frame_white.axis_y = frame[0].axis_y;
 		}
-			break;
+		else if (frame_white.axis_y == frame[2].axis_y) {
+			frame_white.axis_y = frame[1].axis_y;
+		}
+		update_menu_screen_chosse();
+		// Reset timer switch to scr_idle
+		timer_set(	AC_TASK_DISPLAY_ID, \
+					AC_DISPLAY_SHOW_IDLE, \
+					AC_DISPLAY_IDLE_INTERVAL, \
+					TIMER_ONE_SHOT);
+	}
+		BUZZER_PlayTones(tones_cc);
+		break;
 
-		case AC_DISPLAY_BUTTON_DOWN_RELEASED: {
-			APP_DBG_SIG("AC_DISPLAY_BUTTON_DOWN_RELEASED\n");
-			menu_location.chosse += STEP_MENU_CHOSSE;
-			if (menu_location.chosse > MENU_ITEM_ARRDESS_4) { 
-				menu_location.chosse = MENU_ITEM_ARRDESS_1;
+	case AC_DISPLAY_BUTTON_DOWN_RELEASED: {
+		APP_DBG_SIG("AC_DISPLAY_BUTTON_DOWN_RELEASED\n");
+		// 
+		if (screen_menu.location < NUMBER_MENU_ITEMS-1) {
+			screen_menu.location++;
+		}
+		if (frame_white.axis_y == frame[0].axis_y) {
+			frame_white.axis_y = frame[1].axis_y;
+		}
+		else if (frame_white.axis_y == frame[1].axis_y) {
+			frame_white.axis_y = frame[2].axis_y;
+		}
+		else if (frame_white.axis_y == frame[2].axis_y) {
+			if (screen_menu.screen < NUMBER_MENU_ITEMS-3) {
+				screen_menu.screen++;
 			}
-			update_menu_screen_chosse();
-		}	
-			break;
+		}
+		update_menu_screen_chosse();
+		// Reset timer switch to scr_idle
+		timer_set(	AC_TASK_DISPLAY_ID, \
+					AC_DISPLAY_SHOW_IDLE, \
+					AC_DISPLAY_IDLE_INTERVAL, \
+					TIMER_ONE_SHOT);
+	}
+		BUZZER_PlayTones(tones_cc);
+		break;
 
-		default:
-			break;
+	default:
+		break;
 	}
 }

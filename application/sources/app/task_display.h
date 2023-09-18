@@ -5,8 +5,8 @@
 #include "scr_idle.h"
 #include "scr_startup.h"
 
-#define LCD_WIDTH			(127)
-#define LCD_HEIGHT			(63)
+#define LCD_WIDTH			(128)
+#define LCD_HEIGHT			(64)
 
 #define NUMFLAKES			(10)
 #define XPOS				(0)

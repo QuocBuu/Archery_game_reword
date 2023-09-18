@@ -39,23 +39,19 @@
 #include "task_shell.h"
 #include "task_life.h"
 #include "task_if.h"
-#include "task_rf24_if.h"
 #include "task_uart_if.h"
 #include "task_display.h"
-#include "task_zigbee.h"
 
 /* sys include */
 #include "sys_boot.h"
 #include "sys_irq.h"
 #include "sys_io.h"
 #include "sys_ctrl.h"
-#include "sys_dbg.h"
 
 /* arduino include */
 #include "SPI.h"
 #include "WString.h"
 #include "HardwareSerial.h"
-#include "ArduinoJson.h"
 
 /* common include */
 #include "screen_manager.h"
@@ -252,22 +248,7 @@ int main_app() {
 	}
 #endif
 
-#if defined (TASK_ZIGBEE_EN)
-	Serial2.begin();
-	Serial2.setTimeout(100);
-#endif
-
 	EXIT_CRITICAL();
-
-#if defined (TASK_ZIGBEE_EN)
-	APP_PRINT("start_coordinator(0)\n");
-	if (zigbee_network.start_coordinator(0) == 0) {
-		APP_PRINT("OK\n");
-	}
-	else {
-		APP_PRINT("NG\n");
-	}
-#endif
 
 	/* start timer for application */
 	app_init_state_machine();
@@ -293,12 +274,6 @@ int main_app() {
  * when all ak message queue empty, task_polling_xxx() will be called.
  */
 /*****************************************************************************/
-void task_polling_zigbee() {
-#if defined(TASK_ZIGBEE_EN)
-	zigbee_network.update();
-#endif
-}
-
 void task_polling_console() {
 	volatile uint8_t c = 0;
 
@@ -356,9 +331,9 @@ void task_polling_console() {
  */
 void app_start_timer() {
 	/* start timer to toggle life led */
-	timer_set(AC_TASK_LIFE_ID, AC_LIFE_SYSTEM_CHECK, AC_LIFE_TASK_TIMER_LED_LIFE_INTERVAL, TIMER_PERIODIC);
-	timer_set(AC_TASK_FW_ID, FW_CHECKING_REQ, FW_UPDATE_REQ_INTERVAL, TIMER_ONE_SHOT);
-	timer_set(AC_TASK_DISPLAY_ID, AC_DISPLAY_INITIAL, AC_DISPLAY_INITIAL_INTERVAL, TIMER_ONE_SHOT);
+	timer_set(AC_TASK_LIFE_ID, 		AC_LIFE_SYSTEM_CHECK, 	AC_LIFE_TASK_TIMER_LED_LIFE_INTERVAL, 	TIMER_PERIODIC);
+	timer_set(AC_TASK_FW_ID, 		FW_CHECKING_REQ, 		FW_UPDATE_REQ_INTERVAL, 				TIMER_ONE_SHOT);
+	timer_set(AC_TASK_DISPLAY_ID, 	AC_DISPLAY_INITIAL, 	AC_DISPLAY_INITIAL_INTERVAL, 			TIMER_ONE_SHOT);
 }
 
 /* init state machine for tasks
@@ -374,7 +349,6 @@ void app_init_state_machine() {
 void app_task_init() {
 	SCREEN_CTOR(&scr_mng_app, scr_startup_handle, &scr_startup);
 
-	task_post_pure_msg(AC_TASK_RF24_IF_ID, AC_RF24_IF_INIT_NETWORK);
 	task_post_pure_msg(AC_TASK_UART_IF_ID, AC_UART_IF_INIT);
 }
 

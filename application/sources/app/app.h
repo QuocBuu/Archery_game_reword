@@ -14,9 +14,7 @@ extern "C"
 #endif
 
 #include "ak.h"
-#if defined (IF_NETWORK_NRF24_EN)
-#include "nrf_nwk_sig.h"
-#endif
+
 
 #include "app_if.h"
 #include "app_eeprom.h"
@@ -80,21 +78,6 @@ enum {
 };
 
 /*****************************************************************************/
-/*  RF24 task define
- */
-/*****************************************************************************/
-/* private define */
-/* define timer */
-/* define signal */
-enum {
-	AC_RF24_IF_INIT_NETWORK = AK_USER_DEFINE_SIG,
-	AC_RF24_IF_PURE_MSG_OUT,
-	AC_RF24_IF_COMMON_MSG_OUT,
-	AC_RF24_IF_PURE_MSG_IN,
-	AC_RF24_IF_COMMON_MSG_IN,
-};
-
-/*****************************************************************************/
 /* IF task define
  */
 /*****************************************************************************/
@@ -133,6 +116,7 @@ enum {
 /* define timer */
 #define AC_DISPLAY_INITIAL_INTERVAL									(100)
 #define AC_DISPLAY_STARTUP_INTERVAL									(2000)
+#define AC_DISPLAY_IDLE_INTERVAL									(20000)
 #define AC_DISPLAY_LOGO_INTERVAL									(10000)
 #define AC_DISPLAY_SHOW_IDLE_BALL_MOVING_UPDATE_INTERAL				(150)
 
@@ -169,8 +153,8 @@ enum {
  */
 /*****************************************************************************/
 /* define timer */
-#define AR_GAME_TIME_TICK_INTERVAL							(100) 	//	100m
-
+#define AR_GAME_TIME_TICK_INTERVAL									(100)
+#define AR_GAME_TIME_EXIT_INTERVAL									(3000)
 /* define signal */
 enum {
 	AR_GAME_INITIAL_SETUP = AK_USER_DEFINE_SIG,
@@ -226,9 +210,9 @@ enum {
 /* define signal */
 enum {
 	AR_GAME_BORDER_SETUP = AR_GAME_DEFINE_SIG,
-	AR_GAME_BORDER_UPDATE,
-	AR_GAME_BORDER_RESET,
+	AR_GAME_LEVEL_UP,
 	AR_GAME_CHECK_GAME_OVER,
+	AR_GAME_BORDER_RESET,
 };
 
 /*****************************************************************************/
@@ -242,30 +226,6 @@ enum {
 	AR_GAME_METEOROID_RUN,
 	AR_GAME_METEOROID_DETONATOR,
 	AR_GAME_METEOROID_RESET,
-};
-
-/*****************************************************************************/
-/*  ZIGBEE task define
- */
-/*****************************************************************************/
-/* define timer */
-/* define signal */
-enum {
-	AC_ZIGBEE_INIT = AK_USER_DEFINE_SIG,
-	AC_ZIGBEE_FORCE_START_COODINATOR,
-	AC_ZIGBEE_START_COODINATOR,
-	AC_ZIGBEE_PERMIT_JOINING_REQ,
-	AC_ZIGBEE_ZCL_CMD_HANDLER
-};
-
-/*****************************************************************************/
-/* DBG task define
- */
-/*****************************************************************************/
-/* define timer */
-/* define signal */
-enum {
-	AC_DBG_TEST_1 = AK_USER_DEFINE_SIG,
 };
 
 /*****************************************************************************/

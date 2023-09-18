@@ -17,12 +17,10 @@
 
 #include "buzzer.h"
 
-#include "scr_charts_game.h"
-#include "scr_game_setting.h"
-#include "scr_archery_game.h"
+#include "screens.h"
+#include "screens_bitmap.h"
 
 extern view_dynamic_t dyn_view_item_menu_game;
-
 extern view_screen_t scr_menu_game;
 extern void scr_menu_game_handle(ak_msg_t* msg);
 

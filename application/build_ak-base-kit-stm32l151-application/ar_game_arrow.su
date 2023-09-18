@@ -1,3 +1,0 @@
-sources/app/screens/ar_game_arrow.cpp:28:6:void ar_game_arrow_run()	20	static
-sources/app/screens/ar_game_arrow.cpp:43:6:void ar_game_arrow_shoot()	8	static
-sources/app/screens/ar_game_arrow.cpp:59:6:void ar_game_arrow_handle(ak_msg_t*)	16	static
